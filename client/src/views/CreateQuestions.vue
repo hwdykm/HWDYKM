@@ -37,8 +37,7 @@
 
 <script>
 import { db, firebase } from '@/api/firebase';
-// import firebase from "firebase";
-// var ref = new Firebase('https://how-well-do-you-know-me-aa191.firebaseio.com');
+import { mapActions } from 'vuex';
 
 export default {
     name: 'question-form',
@@ -68,7 +67,6 @@ export default {
                     questions: firebase.firestore.FieldValue.arrayUnion(newQuestion)
                 })
                 .then(() => {
-                    console.log('success')
                     this.question = ''
                     this.option1 = ''
                     this.option2 = ''
