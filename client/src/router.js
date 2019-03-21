@@ -28,6 +28,11 @@ export default new Router({
       name: 'InputRoomName',
       component: () => import(/* webpackChunkName: "InputRoomName" */ './views/InputRoomName.vue'),
     },
+    {
+      path: '/create-questions',
+      name: 'CreateQuestions',
+      component: () => import(/* webpackChunkName: "CreateQuestions" */ './views/CreateQuestions.vue')
+    }
   ],
 });
 
