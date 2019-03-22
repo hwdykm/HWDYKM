@@ -11,9 +11,9 @@ export default new Vuex.Store({
   state: {
     id: 'yHOCrnquTvx42fG3SKLD',
     owner: '',
-    roomName: '', //dari owner + random number 3 digit
-    player1: '',
-    player2: '',
+    roomName: 'mahdi123', //dari owner + random number 3 digit
+    player1: 'eltim',
+    player2: 'willy',
     questions: [],
     point1: 0,
     point2: 0,
