@@ -5,7 +5,7 @@
         <form @submit.prevent="addQuestion">
                 <div class="row">
                     <div class="input-field col s6 offset-s3">
-                        <input placeholder="What is my favorite food?" id="first_name2" type="text" class="validate" v-model="question">
+                        <input placeholder="What is my favorite food?" id="first_name2" type="text" v-model="question">
                         <label class="active label-form" for="first_name2">Question</label>
                     </div>
                 </div>
