@@ -16,32 +16,11 @@ export default {
   },
   data() {
     return {
-      todoList: [],
-      id: '',
     };
   },
   created() {
-    return this.findOne();
   },
   methods: {
-    findOne() {
-      firebase
-        .collection('hwdykm')
-        .where('roomName', '==', 'mahdi123')
-        .onSnapshot((snapshot) => {
-          this.todoList = [];
-          snapshot.forEach((change) => {
-            this.id = change.id;
-            this.update();
-          });
-        });
-    },
-    update() {
-      firebase
-        .collection('hwdykm')
-        .doc(this.id)
-        .update({ user1: 'eltim' });
-    },
   },
 };
 </script>

@@ -32,6 +32,11 @@ export default new Router({
       name: 'CreateQuestions',
       component: () => import(/* webpackChunkName: "CreateQuestions" */ './views/CreateQuestions.vue'),
     },
+    {
+      path: '/room/:id',
+      name: 'play-room',
+      component: () => import(/* webpackChunkName: "PlayRoom" */ './views/PlayRoom.vue')
+    },
   ],
 });
 
