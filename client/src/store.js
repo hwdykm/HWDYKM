@@ -49,6 +49,16 @@ export default new Vuex.Store({
         state.player2 = payload.user;
       }
     },
+       
+    setId(state, payload) {
+      state.id = payload
+    },
+    getQuestion(state, payload) {
+      console.log(payload, 'ini dalem get questionnnnnnnnn')
+      state.questions = payload
+    changeRoomStatus(state, payload) {
+      state.roomStatus = payload
+    },
     setUsers(state, payload) {
       state.player1 = payload.player1;
       state.player2 = payload.player2;
@@ -130,6 +140,7 @@ export default new Vuex.Store({
             id = change.id;
             data = change.data();
           });
+
           commit("getQuestion", data.questions);
 
           console.log(data);
@@ -166,6 +177,7 @@ export default new Vuex.Store({
 
           commit("gameStart");
         });
+        
     },
     intoPlayRoom() {
       //
