@@ -23,10 +23,10 @@ export default new Vuex.Store({
   },
   mutations: {
     setUser(state, payload) {
-      if (payload.cmd === 'player1') {
-        state.player1 = payload.user
+      if (payload.cmd === "player1") {
+        state.player1 = payload.user;
       } else {
-        state.player2 = payload.user
+        state.player2 = payload.user;
       }
     },
     createNewRoom(state, payload) {
@@ -41,14 +41,15 @@ export default new Vuex.Store({
     setUser(state, payload) {
       console.log("masok set user", payload.cmd);
       if (payload.cmd === "player1") {
-        console.log(payload, 'ini player 1=====');
+        console.log(payload, "ini player 1=====");
         state.player1 = payload.user;
-      } 
+      }
       if (payload.cmd === "player2") {
-        console.log(payload, 'ini player 2=====');
+        console.log(payload, "ini player 2=====");
         state.player2 = payload.user;
       }
     },
+       
     setId(state, payload) {
       state.id = payload
     },
@@ -59,9 +60,23 @@ export default new Vuex.Store({
       state.roomStatus = payload
     },
     setUsers(state, payload) {
-      state.player1 = payload.player1
-      state.player2 = payload.player2
-      state.owner = payload.owner
+      state.player1 = payload.player1;
+      state.player2 = payload.player2;
+      state.owner = payload.owner;
+    },
+    setId(state, payload) {
+      state.id = payload;
+    },
+    getQuestion(state, payload) {
+      console.log(payload, "ini dalem get questionnnnnnnnn");
+      state.questions = payload;
+    },
+    gameStart(state) {
+      console.log('diluar kondisi, ', state.player1, state.player2)
+      if (state.player2.length > 0) {
+        console.log("game nya di mulai di mutasiiiiiiiiiiiiiiiiiiiiiiii");
+        state.roomStatus = true;
+      }
     }
   },
   actions: {
@@ -126,14 +141,14 @@ export default new Vuex.Store({
             data = change.data();
           });
 
-          commit('getQuestion', data.questions)
+          commit("getQuestion", data.questions);
 
           console.log(data);
           console.log(data.player1);
           console.log(user);
           // debugger
 
-          commit('setId', id)
+          commit("setId", id);
 
           if (data.player1.length == 0) {
             // state.player1 = user
@@ -157,6 +172,10 @@ export default new Vuex.Store({
               .doc(id)
               .update({ player2: user });
           }
+          console.log(store.state.player1, "ini player 1 di stateeeeeeeeeee");
+          console.log(store.state.player2, "ini player 2 di stateeeeeeeeeee");
+
+          commit("gameStart");
         });
         
     },
