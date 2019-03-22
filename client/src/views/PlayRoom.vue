@@ -16,16 +16,18 @@
 
 <script>
 import { mapState } from "vuex";
+import { debug } from 'util';
+import { db } from '@/api/firebase.js'
 
 export default {
   name: "playroom",
   created() {
       this.checkCond()
+      this.getDetails()
   },
-  computed: mapState(["roomName", "player1", "player2", "roomStatus"]),
+  computed: mapState(["id", "roomName", "player1", "player2", "roomStatus"]),
   watch: {
       player1(v) {
-          console.log('hehe')
           if (v.length > 0) {
             this.player1Cond = true
           } else {
@@ -71,6 +73,20 @@ export default {
       },
       changeStatus() {
           this.$store.commit('changeRoomStatus', true)
+      },
+      getDetails() {
+          db
+            .collection('hwdykm')
+            .doc(this.id)
+            .onSnapshot(doc => {
+              let data = doc.data()
+              console.log(doc.data())
+              this.$store.commit('setUsers', {
+                player1: data.player1,
+                player2: data.player2,
+                owner: data.owner
+              })
+            })
       }
   }
 };

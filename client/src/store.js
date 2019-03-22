@@ -9,7 +9,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    id: "yHOCrnquTvx42fG3SKLD",
+    id: "",
     owner: "",
     roomName: "", //dari owner + random number 3 digit
     player1: "",
@@ -50,6 +50,11 @@ export default new Vuex.Store({
     },
     changeRoomStatus(state, payload) {
       state.roomStatus = payload
+    },
+    setUsers(state, payload) {
+      state.player1 = payload.player1
+      state.player2 = payload.player2
+      state.owner = payload.owner
     }
   },
   actions: {
@@ -112,10 +117,6 @@ export default new Vuex.Store({
             id = change.id;
             data = change.data();
           });
-
-          console.log(data);
-          console.log(data.player1);
-          console.log(user);
           // debugger
           let cek = false;
           if (data.player1.length == 0) {
