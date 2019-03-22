@@ -1,12 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { db } from '@/api/firebase'
+import { db, firebase } from '@/api/firebase'
 import alertify from 'alertifyjs';
+import router from './router'
+import store from './store'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    id: 'yHOCrnquTvx42fG3SKLD',
     owner: '',
     roomName: '', //dari owner + random number 3 digit
     player1: '',
@@ -19,12 +22,69 @@ export default new Vuex.Store({
     data: []
   },
   mutations: {
-
+    createNewRoom(state, payload) {
+      state.id = payload.id
+      state.owner = payload.owner
+      state.roomStatus = payload.roomStatus
+      state.roomName = payload.roomName
+    },
+    setNewQuestion(state, payload) {
+      state.questions.push(payload)
+    }
   },
   actions: {
-    findOne({ commit }, { roomName, user }) {
-      let id
-      let data
+
+    createRoom({commit}) {
+      let roomNameGenerated = localStorage.getItem('username')
+      for (let i = 0; i < 3; i++) {
+        roomNameGenerated += Math.floor(Math.random() * 9)
+      }
+
+      const newRoom = {
+        owner: localStorage.getItem('username'),
+        roomName: roomNameGenerated,
+        player1: '',
+        player2: '',
+        questions: [],
+        point1: 0,
+        point2: 0,
+        questionIndex: 0,
+        roomStatus: false
+      }
+
+      db
+      .collection('hwdykm')
+      .add(newRoom)
+      .then(function (docRef) {
+        console.log(docRef.id, `--- docRef.id`)
+        commit('createNewRoom', {
+          id: docRef.id,
+          roomStatus: false,
+          owner: localStorage.getItem('username'),
+          roomName: roomNameGenerated,
+        });
+        router.push('/create-questions')
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+    },
+    addQuestion({ commit }, payload) {
+      let roomId = store.state.id
+      db
+        .collection('hwdykm')
+        .doc(roomId)
+        .update({
+          questions: firebase.firestore.FieldValue.arrayUnion(payload),
+        })
+        .then(() => {
+          commit('setNewQuestion', payload)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    findOne() {
       db
         .collection('hwdykm')
         .where('roomName', '==', roomName)
@@ -48,9 +108,6 @@ export default new Vuex.Store({
               .update({ player2: user })
           }
         })
-    },
-    generateRandomId({commit}) {
-      //ambil dari localstorage + random Number / ambil dari owner
     },
     intoPlayRoom() {
       //
