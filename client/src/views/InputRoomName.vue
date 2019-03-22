@@ -4,7 +4,7 @@
             <form class="inner">
                 <div class="">
                     <div class="input-field col s6">
-                        <form @submit.stop.prevent="addUser">
+                        <form @submit.prevent="addUser">
                             <input id="input_text" type="text" placeholder="Enter Room Name" v-model="roomName">
                             <label for="input_text">Room Name</label>
                         </form>
@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import stores from '../store.js'
+import stores from '../store.js';
+
 export default {
     name: 'InputRoomName',
     data() {

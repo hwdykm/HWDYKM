@@ -9,7 +9,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    id: "yHOCrnquTvx42fG3SKLD",
+    id: "",
     owner: "",
     roomName: "", //dari owner + random number 3 digit
     player1: "",
@@ -22,6 +22,13 @@ export default new Vuex.Store({
     data: []
   },
   mutations: {
+    setUser(state, payload) {
+      if (payload.cmd === 'player1') {
+        state.player1 = payload.user
+      } else {
+        state.player2 = payload.user
+      }
+    },
     createNewRoom(state, payload) {
       state.id = payload.id;
       state.owner = payload.owner;
@@ -32,7 +39,7 @@ export default new Vuex.Store({
       state.questions.push(payload);
     },
     setUser(state, payload) {
-      console.log("masok set user jengggggggggggggggggggggg", payload.cmd);
+      console.log("masok set user", payload.cmd);
       if (payload.cmd === "player1") {
         console.log(payload);
         state.player1 = payload.user;
@@ -40,6 +47,14 @@ export default new Vuex.Store({
       if (payload.cmd === "player2") {
         state.player2 = payload.user;
       }
+    },
+    changeRoomStatus(state, payload) {
+      state.roomStatus = payload
+    },
+    setUsers(state, payload) {
+      state.player1 = payload.player1
+      state.player2 = payload.player2
+      state.owner = payload.owner
     }
   },
   actions: {
@@ -102,10 +117,6 @@ export default new Vuex.Store({
             id = change.id;
             data = change.data();
           });
-
-          console.log(data);
-          console.log(data.player1);
-          console.log(user);
           // debugger
           let cek = false;
           if (data.player1.length == 0) {
@@ -131,7 +142,6 @@ export default new Vuex.Store({
               .doc(id)
               .update({ player2: user });
           }
-          console.log(data.player1 !== user && data.player2.length !== 0);
         });
     },
     intoPlayRoom() {
