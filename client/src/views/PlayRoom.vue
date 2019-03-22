@@ -9,8 +9,8 @@
          alt=""
          width="300rem"
     >
-    <p v-if="player1Cond">{{ player1 }} joined</p>
-    <p v-if="player2Cond"> {{ player2 }} joined</p>
+    <h5 v-if="player1Cond">{{ player1 }} joined as Player 1</h5>
+    <h5 v-if="player2Cond"> {{ player2 }} joined as Player 2</h5>
   </div>
 </template>
 
@@ -60,18 +60,17 @@ export default {
         if (this.player1.length > 0) {
             this.player1Cond = true
             this.allplayers.push(this.player1)
-
         }
-
         if (this.player2.length > 0) {
             this.player2Cond = true
             this.allplayers.push(this.player2)
-
         }
       },
       toggle() {
-          console.log('masok toggle')
           this.toggled = !this.toggled
+      },
+      changeStatus() {
+          this.$store.commit('changeRoomStatus', true)
       }
   }
 };

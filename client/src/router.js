@@ -35,7 +35,7 @@ export default new Router({
     {
       path: '/room/:id',
       name: 'play-room',
-      component: () => import(/* webpackChunkName: "PlayRoom" */ './views/PlayRoom.vue')
+      component: () => import(/* webpackChunkName: "PlayRoom" */ './views/PlayRoom.vue'),
     },
   ],
 });
