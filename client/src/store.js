@@ -18,7 +18,8 @@ export default new Vuex.Store({
     point1: 0,
     point2: 0,
     questionIndex: 0,
-    roomStatus: false
+    roomStatus: false,
+    data: []
   },
   mutations: {
     createNewRoom(state, payload) {
@@ -32,6 +33,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
+
     createRoom({commit}) {
       let roomNameGenerated = localStorage.getItem('username')
       for (let i = 0; i < 3; i++) {
@@ -85,21 +87,27 @@ export default new Vuex.Store({
     findOne() {
       db
         .collection('hwdykm')
-        .where('roomName', '==', 'mahdi123')
+        .where('roomName', '==', roomName)
         .onSnapshot((snapshot) => {
-          // snapshot.forEach((change) => {
-            // this.id = change.id;
-            // this.update();
-          // });
-        });
-    },
-    update() {
-      db
-        .collection('hwdykm')
-        .doc(this.id)
-        .update({
-          user1: 'eltim' 
-        });
+          snapshot.forEach((change) => {
+            id = change.id
+            data = change.data()
+          })
+          console.log(data)
+          if (data.player1 == '') {
+            state.player1 = user
+            db
+              .collection('hwdykm')
+              .doc(id)
+              .update({ player1: user })
+          } else if (data.player1 != '') {
+            state.player2 = user
+            db
+              .collection('hwdykm')
+              .doc(id)
+              .update({ player2: user })
+          }
+        })
     },
     intoPlayRoom() {
       //

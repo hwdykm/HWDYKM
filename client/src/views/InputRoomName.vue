@@ -4,8 +4,10 @@
             <form class="inner">
                 <div class="">
                     <div class="input-field col s6">
-                        <input id="input_text" type="text" placeholder="Enter Room Name">
-                        <label for="input_text">Room Name</label>
+                        <form @submit.stop.prevent="addUser">
+                            <input id="input_text" type="text" placeholder="Enter Room Name" v-model="roomName">
+                            <label for="input_text">Room Name</label>
+                        </form>
                     </div>
                 </div>
             </form>
@@ -14,8 +16,25 @@
 </template>
 
 <script>
+import stores from '../store.js'
 export default {
-};
+    name: 'InputRoomName',
+    data() {
+        return {
+            roomName: '',
+            user: '',
+            user2:''
+        }
+    },
+    methods: {
+        addUser() {
+           this.$store.dispatch('findOne', {
+               roomName: this.roomName,
+               user: localStorage.getItem('username')
+           })
+        }
+    }
+}
 </script>
 
 <style scoped>
