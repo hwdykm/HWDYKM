@@ -49,10 +49,6 @@ export default new Vuex.Store({
         state.player2 = payload.user;
       }
     },
-
-    changeRoomStatus(state, payload) {
-      state.roomStatus = payload;
-    },
     setUsers(state, payload) {
       state.player1 = payload.player1;
       state.player2 = payload.player2;
@@ -64,6 +60,13 @@ export default new Vuex.Store({
     getQuestion(state, payload) {
       console.log(payload, "ini dalem get questionnnnnnnnn");
       state.questions = payload;
+    },
+    gameStart(state) {
+      console.log('diluar kondisi, ', state.player1, state.player2)
+      if (state.player2.length > 0) {
+        console.log("game nya di mulai di mutasiiiiiiiiiiiiiiiiiiiiiiii");
+        state.roomStatus = true;
+      }
     }
   },
   actions: {
@@ -158,6 +161,10 @@ export default new Vuex.Store({
               .doc(id)
               .update({ player2: user });
           }
+          console.log(store.state.player1, "ini player 1 di stateeeeeeeeeee");
+          console.log(store.state.player2, "ini player 2 di stateeeeeeeeeee");
+
+          commit("gameStart");
         });
     },
     intoPlayRoom() {
