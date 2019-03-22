@@ -4,7 +4,12 @@
       <div class="row">
         <form class="input-field col s6 offset-s3" @submit.prevent="submit">
           <div class="input">
-            <input id="input-username" type="text" class="validate center" autocomplete="off" v-model="name">
+            <input
+              id="input-username"
+              type="text"
+              class="validate center"
+              autocomplete="off"
+              v-model="name">
             <label for="username">input your name here</label>
           </div>
         </form>
@@ -15,19 +20,18 @@
 
 <script>
 export default {
-    name: 'inputNameForm',
-    data() {
-        return {
-            name: "",
-        }
+  name: 'inputNameForm',
+  data() {
+    return {
+      name: '',
+    };
+  },
+  methods: {
+    submit() {
+      localStorage.setItem('username', this.name);
+      this.$router.push('/chooseQA');
     },
-    methods: {
-        submit() {
-            localStorage.setItem("username", this.name)
-            this.$router.push("/chooseQA")
-            console.log('submitted!', this.name )
-        }
-    }
+  }
 };
 </script>
 
