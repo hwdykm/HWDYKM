@@ -3,7 +3,7 @@
     <div id="content" class="container center">
       <div class="row">
         <div id="button-ask" class="input-field col s4 offset-s2">
-          <router-link to="/create-questions" class="waves-effect black btn-large">ASK</router-link>
+          <a href="#" class="waves-effect black btn-large" @click="createNewRoom">ASK</a>
         </div>
         <div id="button-ans" class="input-field col s4">
           <!-- <a class="waves-effect black btn-large">ANS</a> -->
@@ -15,7 +15,16 @@
 </template>
 
 <script>
-export default {};
+// import { mapActions } from 'vuex';
+
+export default {
+  name: 'choose-qa',
+  methods: {
+    createNewRoom() {
+      this.$store.dispatch('createRoom')
+    }
+  }
+};
 </script>
 
 <style scoped>
