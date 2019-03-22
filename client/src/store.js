@@ -15,30 +15,39 @@ export default new Vuex.Store({
     point1: 0,
     point2: 0,
     questionIndex: 0,
-    roomStatus: false
+    roomStatus: false,
+    data: []
   },
   mutations: {
 
   },
   actions: {
-    findOne() {
+    findOne({ commit }, { roomName, user }) {
+      let id
+      let data
       db
         .collection('hwdykm')
-        .where('roomName', '==', 'mahdi123')
+        .where('roomName', '==', roomName)
         .onSnapshot((snapshot) => {
-          // snapshot.forEach((change) => {
-            // this.id = change.id;
-            // this.update();
-          // });
-        });
-    },
-    update() {
-      db
-        .collection('hwdykm')
-        .doc(this.id)
-        .update({
-          user1: 'eltim' 
-        });
+          snapshot.forEach((change) => {
+            id = change.id
+            data = change.data()
+          })
+          console.log(data)
+          if (data.player1 == '') {
+            state.player1 = user
+            db
+              .collection('hwdykm')
+              .doc(id)
+              .update({ player1: user })
+          } else if (data.player1 != '') {
+            state.player2 = user
+            db
+              .collection('hwdykm')
+              .doc(id)
+              .update({ player2: user })
+          }
+        })
     },
     generateRandomId({commit}) {
       //ambil dari localstorage + random Number / ambil dari owner
