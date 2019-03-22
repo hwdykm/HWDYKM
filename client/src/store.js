@@ -9,7 +9,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    id: "yHOCrnquTvx42fG3SKLD",
+    id: "",
     owner: "",
     roomName: "", //dari owner + random number 3 digit
     player1: "",
@@ -34,12 +34,20 @@ export default new Vuex.Store({
     setUser(state, payload) {
       console.log("masok set user jengggggggggggggggggggggg", payload.cmd);
       if (payload.cmd === "player1") {
-        console.log(payload);
+        console.log(payload, 'ini player 1=====');
         state.player1 = payload.user;
       } 
       if (payload.cmd === "player2") {
+        console.log(payload, 'ini player 2=====');
         state.player2 = payload.user;
       }
+    },
+    setId(state, payload) {
+      state.id = payload
+    },
+    getQuestion(state, payload) {
+      console.log(payload, 'ini dalem get questionnnnnnnnn')
+      state.questions = payload
     }
   },
   actions: {
@@ -94,6 +102,7 @@ export default new Vuex.Store({
     findOne({ commit }, { roomName, user }) {
       let id;
       let data;
+      let question;
       // console.log(roomName, user)
       db.collection("hwdykm")
         .where("roomName", "==", roomName)
@@ -103,13 +112,16 @@ export default new Vuex.Store({
             data = change.data();
           });
 
+          commit('getQuestion', data.questions)
+
           console.log(data);
           console.log(data.player1);
           console.log(user);
           // debugger
-          let cek = false;
+
+          commit('setId', id)
+
           if (data.player1.length == 0) {
-            cek = true;
             // state.player1 = user
             db.collection("hwdykm")
               .doc(id)
@@ -133,6 +145,7 @@ export default new Vuex.Store({
           }
           console.log(data.player1 !== user && data.player2.length !== 0);
         });
+        
     },
     intoPlayRoom() {
       //
