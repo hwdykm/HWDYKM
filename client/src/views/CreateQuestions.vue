@@ -15,59 +15,58 @@
           <label class="active label-form" for="first_name2">Question</label>
         </div>
       </div>
+            <h5 class="my-3">Answers:</h5>
+            <div class="row">
+                <div class="input-field col s6 offset-s3">
+                    <input
+                        placeholder="Dog Food"
+                        type="text"
+                        class="validate"
+                        v-model="option1">
+                    <label class="active label-form" for="first_name2">Option 1</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6 offset-s3">
+                    <input
+                        placeholder="Cat Food"
+                        type="text"
+                        class="validate"
+                        v-model="option2"
+                    >
+                    <label class="active label-form" for="first_name2">Option 2</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6 offset-s3">
+                    <input
+                        placeholder="Hippo's Food"
+                        type="text"
+                        class="validate"
+                        v-model="option3"
+                    >
+                    <label class="active label-form" for="first_name2">Option 3</label>
+                </div>
+            </div>
 
-                <h5 class="my-3">Answers:</h5>
-                <div class="row">
-                    <div class="input-field col s6 offset-s3">
-                        <input
-                            placeholder="Dog Food"
-                            type="text"
-                            class="validate"
-                            v-model="option1">
-                        <label class="active label-form" for="first_name2">Option 1</label>
-                    </div>
+            <h5 class="my-3">Answers:</h5>
+            <div class="row">
+                <div class="input-field col s6 offset-s3">
+                    <input
+                        placeholder="a / b / c"
+                        type="text"
+                        class="validate"
+                        v-model="answer">
+                    <label class="active label-form" for="first_name2">Correct Answer:</label>
                 </div>
-                <div class="row">
-                    <div class="input-field col s6 offset-s3">
-                        <input
-                            placeholder="Cat Food"
-                            type="text"
-                            class="validate"
-                            v-model="option2"
-                        >
-                        <label class="active label-form" for="first_name2">Option 2</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s6 offset-s3">
-                        <input
-                            placeholder="Hippo's Food"
-                            type="text"
-                            class="validate"
-                            v-model="option3"
-                        >
-                        <label class="active label-form" for="first_name2">Option 3</label>
-                    </div>
-                </div>
+            </div>
 
-                <h5 class="my-3">Answers:</h5>
-                <div class="row">
-                    <div class="input-field col s6 offset-s3">
-                        <input
-                            placeholder="a / b / c"
-                            type="text"
-                            class="validate"
-                            v-model="answer">
-                        <label class="active label-form" for="first_name2">Correct Answer:</label>
-                    </div>
-                </div>
-
-                <button class="btn waves-effect waves-light mr-3" type="submit" name="action">
-                    Next Question
-                </button>
-                <span>
-                    <button @click="displayRoomName" class="btn waves-effect waves-light" type="button">Done</button>
-                </span>
+            <button class="btn waves-effect waves-light mr-3" type="submit" name="action">
+                Next Question
+            </button>
+            <span>
+                <button @click="displayRoomName" class="btn waves-effect waves-light" type="button">Done</button>
+            </span>
         </form>
     </div>
 </template>
@@ -100,10 +99,14 @@ export default {
           answer: this.answer
         };
         this.$store.dispatch('addQuestion', newQuestion)
+        this.question = ''
+        this.option1 = ''
+        this.option2 = ''
+        this.option3 = ''
+        this.answer = ''
     },
     displayRoomName() {
-      console.log(this.roomName);
-      this.$router.push(`/room/${this.roomName}`)
+        this.$router.push(`/room/${this.roomName}`)
     }
   }
 };
