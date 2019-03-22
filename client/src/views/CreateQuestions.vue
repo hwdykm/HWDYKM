@@ -1,19 +1,20 @@
 <template>
-    <div class="container my-5" id="form-question">
-        <h3 class="form-space">Question Form</h3>
+  <div class="container my-5" id="form-question">
+    <h3 class="form-space">Question Form</h3>
 
-        <form @submit.prevent="addQuestion">
-                <div class="row">
-                    <div class="input-field col s6 offset-s3">
-                        <input
-                            placeholder="What is my favorite food?"
-                            id="first_name2"
-                            type="text"
-                            class="validate"
-                            v-model="question">
-                        <label class="active label-form" for="first_name2">Question</label>
-                    </div>
-                </div>
+    <form @submit.prevent="addQuestion">
+      <div class="row">
+        <div class="input-field col s6 offset-s3">
+          <input
+            placeholder="What is my favorite food?"
+            id="first_name2"
+            type="text"
+            class="validate"
+            v-model="question"
+          >
+          <label class="active label-form" for="first_name2">Question</label>
+        </div>
+      </div>
 
                 <h5 class="my-3">Answers:</h5>
                 <div class="row">
@@ -65,20 +66,18 @@
                     Next Question
                 </button>
                 <span>
-                    <button class="btn waves-effect waves-light" type="button" name="action">
-                        Done
-                    </button>
+                    <button @click="displayRoomName" class="btn waves-effect waves-light" type="button">Done</button>
                 </span>
         </form>
     </div>
 </template>
 
 <script>
-import { db, firebase } from '@/api/firebase';
-// import { mapActions } from 'vuex';
+import { db, firebase } from "@/api/firebase";
+import { mapState } from "vuex";
 
 export default {
-  name: 'question-form',
+  name: "question-form",
   data() {
     return {
       question: '',
@@ -88,6 +87,7 @@ export default {
       answer: ''
     };
   },
+  computed: mapState(["id", "roomName"]),
   methods: {
     addQuestion() {
         const newQuestion = {
@@ -101,25 +101,29 @@ export default {
         };
         this.$store.dispatch('addQuestion', newQuestion)
     },
-  },
+    displayRoomName() {
+      console.log(this.roomName);
+      this.$router.push(`/room/${this.roomName}`)
+    }
+  }
 };
 </script>
 
 <style>
-    .form-space {
-        margin: 5 auto;
-    }
-    .my-5 {
-        margin-top: 100px;
-    }
-    .my-3 {
-        margin-top: 50px;
-    }
-    .label-form {
-        font-weight: bold;
-        font-size: 1.5em !important;
-    }
-    .mr-3 {
-        margin-right: 100px;
-    }
+.form-space {
+  margin: 5 auto;
+}
+.my-5 {
+  margin-top: 100px;
+}
+.my-3 {
+  margin-top: 50px;
+}
+.label-form {
+  font-weight: bold;
+  font-size: 1.5em !important;
+}
+.mr-3 {
+  margin-right: 100px;
+}
 </style>
