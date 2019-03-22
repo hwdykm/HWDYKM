@@ -23,10 +23,10 @@ export default new Vuex.Store({
   },
   mutations: {
     setUser(state, payload) {
-      if (payload.cmd === 'player1') {
-        state.player1 = payload.user
+      if (payload.cmd === "player1") {
+        state.player1 = payload.user;
       } else {
-        state.player2 = payload.user
+        state.player2 = payload.user;
       }
     },
     createNewRoom(state, payload) {
@@ -41,20 +41,29 @@ export default new Vuex.Store({
     setUser(state, payload) {
       console.log("masok set user", payload.cmd);
       if (payload.cmd === "player1") {
-        console.log(payload);
+        console.log(payload, "ini player 1=====");
         state.player1 = payload.user;
-      } 
+      }
       if (payload.cmd === "player2") {
+        console.log(payload, "ini player 2=====");
         state.player2 = payload.user;
       }
     },
+
     changeRoomStatus(state, payload) {
-      state.roomStatus = payload
+      state.roomStatus = payload;
     },
     setUsers(state, payload) {
-      state.player1 = payload.player1
-      state.player2 = payload.player2
-      state.owner = payload.owner
+      state.player1 = payload.player1;
+      state.player2 = payload.player2;
+      state.owner = payload.owner;
+    },
+    setId(state, payload) {
+      state.id = payload;
+    },
+    getQuestion(state, payload) {
+      console.log(payload, "ini dalem get questionnnnnnnnn");
+      state.questions = payload;
     }
   },
   actions: {
@@ -109,6 +118,7 @@ export default new Vuex.Store({
     findOne({ commit }, { roomName, user }) {
       let id;
       let data;
+      let question;
       // console.log(roomName, user)
       db.collection("hwdykm")
         .where("roomName", "==", roomName)
@@ -117,10 +127,16 @@ export default new Vuex.Store({
             id = change.id;
             data = change.data();
           });
+          commit("getQuestion", data.questions);
+
+          console.log(data);
+          console.log(data.player1);
+          console.log(user);
           // debugger
-          let cek = false;
+
+          commit("setId", id);
+
           if (data.player1.length == 0) {
-            cek = true;
             // state.player1 = user
             db.collection("hwdykm")
               .doc(id)
