@@ -1,16 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { db } from '@/api/firebase'
+import { db, firebase } from '@/api/firebase'
 import alertify from 'alertifyjs';
 import router from './router'
+import store from './store'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    id: '',
+    id: 'yHOCrnquTvx42fG3SKLD',
     owner: '',
-    roomName: 'mahdi123', //dari owner + random number 3 digit
+    roomName: '', //dari owner + random number 3 digit
     player1: '',
     player2: '',
     questions: [],
@@ -20,13 +21,6 @@ export default new Vuex.Store({
     roomStatus: false
   },
   mutations: {
-    // generateRoomName(state) {//ambil dari localstorage + random Number / ambil dari owner
-    //   let roomNameGenerated = ''
-    //   for (let i = 0; i < 3; i++) {
-    //     roomNameGenerated += Math.floor(Math.random() * 9)
-    //   }
-      // state.roomName = state.owner + roomNameGenerated
-    // },
     createNewRoom(state, payload) {
       state.id = payload.id
       state.owner = payload.owner
@@ -73,22 +67,13 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-    addQuestion({commit}, payload) {
-      const newQuestion = {
-        question: payload.question,
-        options: {
-          a: payload.option1,
-          b: payload.option2,
-          c: payload.option3,
-        },
-        answer: payload.answer
-      };
-
+    addQuestion({ commit }, payload) {
+      let roomId = store.state.id
       db
         .collection('hwdykm')
-        .doc()
+        .doc(roomId)
         .update({
-          questions: firebase.firestore.FieldValue.arrayUnion(newQuestion),
+          questions: firebase.firestore.FieldValue.arrayUnion(payload),
         })
         .then(() => {
           commit('setNewQuestion', payload)
