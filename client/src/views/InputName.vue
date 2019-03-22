@@ -23,7 +23,8 @@ export default {
     },
     methods: {
         submit() {
-            localStorage.setItem("ownerName", this.name)
+            localStorage.setItem("username", this.name)
+            this.$router.push("/chooseQA")
             console.log('submitted!', this.name )
         }
     }
