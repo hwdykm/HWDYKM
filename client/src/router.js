@@ -10,13 +10,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
       component: Home,
-    },
-    {
-      path: '/input-name',
-      name: 'InputName',
-      component: () => import(/* webpackChunkName: "InputName" */ './views/InputName.vue'),
+      children: [{
+        path: '/',
+        name: 'home',
+        component: () => import(/* webpackChunkName: "InputName" */ './views/InputName.vue'),
+      }],
     },
     {
       path: '/chooseQA',
@@ -31,8 +30,8 @@ export default new Router({
     {
       path: '/create-questions',
       name: 'CreateQuestions',
-      component: () => import(/* webpackChunkName: "CreateQuestions" */ './views/CreateQuestions.vue')
-    }
+      component: () => import(/* webpackChunkName: "CreateQuestions" */ './views/CreateQuestions.vue'),
+    },
   ],
 });
 

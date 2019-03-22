@@ -1,7 +1,8 @@
-import firebase from '@/api/firebase.js'
+import firebase from '@/api/firebase.js';
+
 firebase
-    .collection('hwdykm')
-    .doc('roomName')
-    .then((data) => {
-        console.log(data)
-    })
+  .collection('hwdykm')
+  .doc('roomName')
+  .then((data) => {
+    console.log(data);
+  });

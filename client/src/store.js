@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import alertify from 'alertifyjs';
 
 Vue.use(Vuex);
 
