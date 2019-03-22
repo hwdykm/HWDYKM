@@ -1,12 +1,16 @@
 <template>
     <div>
-        
+        <h1>helo from play room</h1>
     </div>
 </template>
 
 <script>
-export default {
+import { mapState } from "vuex";
 
+
+export default {
+    name: 'playroom',
+    
 }
 </script>
 
